@@ -8,8 +8,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200614192838_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20200614195004_Cg2Lab")]
+    partial class Cg2Lab
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace Service.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("infra.Member", b =>
+            modelBuilder.Entity("cg2labweb.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using Google.Protobuf.WellKnownTypes;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-//using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,9 +25,7 @@ namespace cg2labweb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
-
-
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
