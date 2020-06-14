@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 
+
 namespace Service
 {
-    public class Context:DbContext
+    public class ApplicationDbContext:DbContext
     {
-        public Context(DbContextOptions<Context> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
        : base(options)
         {
         }

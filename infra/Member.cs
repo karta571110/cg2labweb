@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cg2labweb.Models
+namespace infra
 {
     public class Member
     {
