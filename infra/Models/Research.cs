@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace cg2labweb.Models
+namespace infra.Models
 {
 
     public class Research

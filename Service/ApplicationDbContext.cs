@@ -1,5 +1,4 @@
-﻿using infra;
-using infra.Models;
+﻿using infra.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 

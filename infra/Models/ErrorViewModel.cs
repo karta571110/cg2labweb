@@ -1,6 +1,6 @@
 using System;
 
-namespace cg2labweb.Models
+namespace infra.Models
 {
     public class ErrorViewModel
     {

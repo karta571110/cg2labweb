@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace infra
+namespace infra.Models
 {
     public class Member
     {
