@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\cg2labweb\cg2labweb.csproj" />
+    <ProjectReference Include="..\infra\infra.csproj" />
   </ItemGroup>
 
 </Project>

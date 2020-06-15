@@ -1,4 +1,5 @@
-﻿using cg2labweb.Models;
+﻿using infra;
+using infra.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -13,5 +14,7 @@ namespace Service
         }
 
         public DbSet<Member> Members { get; set; }
+        public DbSet<Research> Researches { get; set; }
+        
     }
 }
