@@ -12,6 +12,7 @@ namespace prjcg2lab.Controllers
         public ActionResult Dashboard()
         {
             return View();
+            //
         }
     }
 }
