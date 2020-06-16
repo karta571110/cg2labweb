@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using infra.Models;
 namespace prjcg2lab.Controllers
 {
-    public class DashboradController : Controller
+    public class DashboardController : Controller
     {
-        // GET: Dashborad
+        // GET: Dashboard
         public ActionResult Dashboard()
         {
             return View();
-            //
         }
     }
 }
