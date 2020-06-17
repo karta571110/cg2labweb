@@ -10,7 +10,8 @@ namespace infra.Models
     public class Research
     {
         [Key]
-        public int key { get; set; }
+        public int id { get; set; }
+
         public string fileName { get; set; }
 
         public string justName { get; set; }
