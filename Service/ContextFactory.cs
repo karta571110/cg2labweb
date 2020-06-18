@@ -18,7 +18,7 @@ namespace Service
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseMySQL("server=localhost;database=Cg2Lab;user=cg2lab;password=cg2lab;SslMode=none");           
-            return new ApplicationDbContext(optionsBuilder.Options);
+            return new ApplicationDbContext(optionsBuilder.Options);//
         }
         
     }
