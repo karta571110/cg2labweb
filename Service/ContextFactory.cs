@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Service
 {
-   public class ContextFactory:IDesignTimeDbContextFactory<ApplicationDbContext>
+    class ContextFactory:IDesignTimeDbContextFactory<ApplicationDbContext>
     {
         public ApplicationDbContext dbContext()
         {
@@ -17,8 +17,8 @@ namespace Service
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseMySQL("server=localhost;database=Cg2Lab;user=cg2lab;password=cg2lab;SslMode=none");           
-            return new ApplicationDbContext(optionsBuilder.Options);//
+            optionsBuilder.UseMySQL("server=localhost;database=Cg2Lab;user=cg2lab;password=cg2lab;SslMode=none");
+            return new ApplicationDbContext(optionsBuilder.Options);
         }
         
     }
