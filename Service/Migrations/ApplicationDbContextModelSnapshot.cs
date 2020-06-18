@@ -16,7 +16,7 @@ namespace Service.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("cg2labweb.Models.Member", b =>
+            modelBuilder.Entity("infra.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace Service.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("cg2labweb.Models.Research", b =>
+            modelBuilder.Entity("infra.Models.Research", b =>
                 {
                     b.Property<int>("key")
                         .ValueGeneratedOnAdd()

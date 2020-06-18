@@ -8,8 +8,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200615070139_Try")]
-    partial class Try
+    [Migration("20200618054238_Cg2Test")]
+    partial class Cg2Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace Service.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("cg2labweb.Models.Member", b =>
+            modelBuilder.Entity("infra.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,6 +33,23 @@ namespace Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("infra.Models.Research", b =>
+                {
+                    b.Property<int>("key")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("fileName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("justName")
+                        .HasColumnType("text");
+
+                    b.HasKey("key");
+
+                    b.ToTable("Researches");
                 });
 #pragma warning restore 612, 618
         }
