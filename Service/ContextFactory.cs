@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Service
 {
-    class ContextFactory:IDesignTimeDbContextFactory<ApplicationDbContext>
+   public class ContextFactory:IDesignTimeDbContextFactory<ApplicationDbContext>
     {
         public ApplicationDbContext dbContext()
         {

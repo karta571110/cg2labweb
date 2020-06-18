@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Service;
 using System.Diagnostics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace prjcg2lab.Controllers
 {
@@ -22,22 +23,156 @@ namespace prjcg2lab.Controllers
             _env = env;
             _dir = env.ContentRootPath + "/wwwroot/Mt/pdf/hank's";
         }
+
+
+        /*
+                  Databse  (table) --> Entiy Model   (DbSet<XXX>) 
+                  ViewModel 
+
+
+                ex: Research             (Entiy)
+                    ResearchViewModel
+           
+
+                // AutoMapper   Research <-->  ResearchViewModel
+
+                  
+
+                 ResearchViewModel fromUi
+
+                 var query = from q in contet.Resourch 
+                             where q.id  ==  fromUI.id 
+                             select ; 
+
+                  if(querey.Any()){
+                       var item = query.First();   //entiry 
+
+                       item.XXX = fromUI.XXX ;
+                       //...  skip...
+  
+                      contet.saveChange();
+                  }
+
+
+
+
+         */
+
+
+
+
+
+        public IActionResult Insert()
+        {
+            IActionResult result = View();
+            try
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+
+                    Research toDb = new Research()
+                    {
+                        fileName = "test1",
+                        justName = "test2",
+                    };
+
+                    content.Researches.Add(toDb);
+                    content.SaveChanges();
+
+                }
+
+            }
+            catch (Exception exp)
+            {
+                //  you can using NLog for loging 
+                Console.WriteLine(exp.ToString());
+
+                //result = RedirectToAction()
+                //throw;
+            }
+            return result;
+        }
+
+
+
+        public IActionResult Update()
+        {
+            IActionResult result = View();
+            try
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+
+                    var query = from q in content.Researches
+                                where q.id == 1
+                                select q;
+
+                    if (query.Any())
+                    {
+                        var fromDB = query.FirstOrDefault();
+                        fromDB.fileName = "aaaaaaa";
+
+                        content.SaveChanges();
+                    }
+
+                }
+
+            }
+            catch (Exception exp)
+            {
+                //  you can using NLog for loging 
+                Console.WriteLine(exp.ToString());
+
+                //result = RedirectToAction()
+                //throw;
+            }
+            return result;
+        }
+
         // GET: Dashboard
         public IActionResult Dashboard()
         {
             try
             {
-                var cf = new ContextFactory();
-                cf.dbContext().Members.Add(new Member
+                using (var content = new ContextFactory().dbContext())
                 {
+                    // Linq  
+                    var query = from q in content.Researches
+                                select q;
+                    //  IQueryable <--- non yet connection 
 
-                    Account = "ASdasd",
-                    Password = "cxvvcb"
-                });
-                cf.dbContext().SaveChanges();
+
+
+                    //var q = content.Researches.Where(x => x.id == 1)
+                    //                          .Select(x => x.fileName)
+                    //                          .ToList();
+
+
+                    if (query.Any())
+                    {
+                        var result = query.ToList();
+                        // IEnumerable  <-- get the date from databse , 
+
+                        Console.WriteLine(result.Count);
+                    }
+                }
+
+
+
+
+
+                //var cf = new ContextFactory();
+
+                //cf.dbContext().Members.Add(new Member
+                //{
+
+                //    Account = "ASdasd",
+                //    Password = "cxvvcb"
+                //});
+                //cf.dbContext().SaveChanges();
                 //Debug.WriteLine("11111111111111");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }

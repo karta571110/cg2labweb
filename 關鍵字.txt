@@ -1,0 +1,45 @@
+
+M    -->  Repo.
+V    -->  SAME
+C    -->  Call Services 
+
+
+
+   UserServices.cs
+    ListUserViewModel();
+   
+    GetUserViewModel(){
+        GetRepo. XFASDFASDFASDFSDFD  (linking DB) 
+   }
+
+
+
+
+ MasterViewModel {
+
+    public int id {Get;set;}
+    public  IList<DetailViewModel > detail {get;set;}
+ }
+ 
+DetailViewModel  {
+   public int  id {get;set;}
+}
+
+
+///   
+
+var master = from q in context.Master 
+            where q.id = masterId 
+           select q;  //first 
+
+
+var detal = from q in context.Maste
+           where q.masterId = masterId 
+           select q;   //toList
+
+
+
+
+
+
+
