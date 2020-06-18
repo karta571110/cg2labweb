@@ -7,24 +7,43 @@ using infra.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Service;
+using System.Diagnostics;
 
 namespace prjcg2lab.Controllers
 {
     public class DashboardController : Controller
     {
+
         private IWebHostEnvironment _env;
         private string _dir;
         public DashboardController(IWebHostEnvironment env)
         {
             _env = env;
-            _dir = env.ContentRootPath+ "/wwwroot/Mt/pdf/hank's";
+            _dir = env.ContentRootPath + "/wwwroot/Mt/pdf/hank's";
         }
         // GET: Dashboard
         public IActionResult Dashboard()
         {
+            try
+            {
+                var cf = new ContextFactory();
+                cf.dbContext().Members.Add(new Member
+                {
+
+                    Account = "ASdasd",
+                    Password = "cxvvcb"
+                });
+                cf.dbContext().SaveChanges();
+                //Debug.WriteLine("11111111111111");
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
             return View();
         }
-        
+
         public IActionResult UpdatePaper()
         {
             var i = 1;
@@ -37,7 +56,7 @@ namespace prjcg2lab.Controllers
 
                 rsl.Add(new Research()
                 {
-                    id=i,
+                    id = i,
                     fileName = item.Name,
                     justName = Path.GetFileNameWithoutExtension(item.FullName)
 
@@ -51,7 +70,7 @@ namespace prjcg2lab.Controllers
         [HttpPost]
         public IActionResult UpdatePaper(IEnumerable<IFormFile> files)
         {
-            foreach(var item in files)
+            foreach (var item in files)
             {
                 using (var fileStream = new FileStream(Path.Combine(_dir, item.FileName), FileMode.Create, FileAccess.Write))
                 {
@@ -62,7 +81,7 @@ namespace prjcg2lab.Controllers
         }
         public IActionResult Delete(string fileName)
         {
-            System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/"+fileName);
+            System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/" + fileName);
             return RedirectToAction("UpdatePaper");
         }
     }
