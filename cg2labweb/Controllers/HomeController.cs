@@ -36,6 +36,10 @@ namespace cg2labweb.Controllers
             }
             return View(rsl);
         }
+        public IActionResult Institute()
+        {
+            return View();
+        }
 
         public IActionResult Device()
         {

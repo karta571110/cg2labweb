@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using infra.Models;
+using infra.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Service;
 using System.Diagnostics;
+using MySqlX.XDevAPI.Common;
 
 namespace prjcg2lab.Controllers
 {
@@ -20,32 +22,34 @@ namespace prjcg2lab.Controllers
         public DashboardController(IWebHostEnvironment env)
         {
             _env = env;
-            _dir = env.ContentRootPath + "/wwwroot/Mt/pdf/hank's";
+            _dir = env.ContentRootPath ;
         }
         // GET: Dashboard
         public IActionResult Dashboard()
         {
-            try
-            {
-                var cf = new ContextFactory();
-                cf.dbContext().Members.Add(new Member
-                {
+            
+            //try
+            //{
+            //    var cf = new ContextFactory().dbContext();
+            //    cf.Members.Add(new Member
+            //    {
 
-                    Account = "ASdasd",
-                    Password = "cxvvcb"
-                });
-                cf.dbContext().SaveChanges();
-                //Debug.WriteLine("11111111111111");
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            //        Account = "ASdasd",
+            //        Password = "cxvvcb"
+            //    });
+            //    cf.SaveChanges();
+            //    //Debug.WriteLine("11111111111111");
+            //}
+            //catch(Exception ex)
+            //{
+            //    Debug.WriteLine(ex.Message);
+            //}
             return View();
         }
 
         public IActionResult UpdatePaper()
         {
+            
             var i = 1;
             List<Research> rsl = new List<Research>();
             DirectoryInfo dir = new DirectoryInfo("wwwroot/Mt/pdf/hank's");
@@ -53,7 +57,7 @@ namespace prjcg2lab.Controllers
             foreach (FileInfo item in finfo)
             {
                 //FileInfo fi=new FileInfo(FileCollection )
-
+                //Debug.WriteLine(item.FullName);
                 rsl.Add(new Research()
                 {
                     id = i,
@@ -72,17 +76,87 @@ namespace prjcg2lab.Controllers
         {
             foreach (var item in files)
             {
-                using (var fileStream = new FileStream(Path.Combine(_dir, item.FileName), FileMode.Create, FileAccess.Write))
+                Debug.WriteLine(item.FileName);
+                using (var fileStream = new FileStream(Path.Combine(_dir + "/wwwroot/Mt/pdf/hank's", item.FileName), FileMode.Create, FileAccess.Write))
                 {
                     item.CopyTo(fileStream);
                 }
             }
             return RedirectToAction("UpdatePaper");
         }
-        public IActionResult Delete(string fileName)
+        public IActionResult UpdateMasterPaper()
+        {
+            List<ViewMasterPaper> mpV = new List<ViewMasterPaper>();
+            
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.MasterPapers
+                            orderby q.dateTime descending,q.Id ascending
+                            where q.Id!=0
+                            select new ViewMasterPaper {
+                                Id = q.Id,
+                                dateTime = q.dateTime,
+                                FileName = q.FileName,
+                                FilePath = q.FilePath,
+                                FileFullName = q.FileFullName,
+                                MasterName = q.MasterName
+                            };
+
+                if (query.Any())
+                {
+                    mpV = query.ToList();
+                }
+                //var result = query.ToList();
+                //foreach(var item in result)
+                //{
+                //    mpV.Add(new ViewMasterPaper
+                //    {
+                //        Id=item.Id,
+                //        dateTime=item.dateTime,
+                //        FileName=item.FileName,
+                //        FilePath=item.FilePath,
+                //        FileFullName=item.FileFullName,
+                //        MasterName=item.MasterName
+                //    });
+                //}
+            }
+            return View(mpV);
+        }
+        [HttpPost]
+        public IActionResult UpdateMasterPaper(string AuthorName,string topic,IFormFile MasterPdfFile)
+        {
+            if (!Directory.Exists(_dir + "/wwwroot/Mt/pdf/MasterDegree/"+ AuthorName))
+            {
+                Directory.CreateDirectory(_dir + "/wwwroot/Mt/pdf/MasterDegree/" + AuthorName);
+            }           
+            using(var content=new ContextFactory().dbContext())
+            {
+                var mp = new MasterPaper
+                {
+                    FilePath = "/wwwroot/Mt/pdf/MasterDegree/" + topic + ".pdf",
+                    FileName = topic,
+                    MasterName = AuthorName,
+                    FileFullName = topic + ".pdf",
+                    dateTime = DateTime.Now
+                };
+                using (var fileStream = new FileStream(Path.Combine(_dir+ "/wwwroot/Mt/pdf/MasterDegree/"+ AuthorName, topic + ".pdf"), FileMode.Create, FileAccess.Write))
+                {
+                    MasterPdfFile.CopyTo(fileStream);
+                }
+                content.MasterPapers.Add(mp);
+                content.SaveChanges();
+            }
+            return RedirectToAction("UpdateMasterPaper");
+        }
+        public IActionResult DeleteHankPaper(string fileName)
         {
             System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/" + fileName);
             return RedirectToAction("UpdatePaper");
+        }
+        public IActionResult DeleteMasterPaper(string filePath)
+        {
+            System.IO.File.Delete(@_dir+filePath);
+            return RedirectToAction("UpdateMasterPaper");
         }
     }
 }
