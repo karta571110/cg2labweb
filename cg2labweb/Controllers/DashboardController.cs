@@ -133,7 +133,7 @@ namespace prjcg2lab.Controllers
             {
                 var mp = new MasterPaper
                 {
-                    FilePath = "/wwwroot/Mt/pdf/MasterDegree/" + topic + ".pdf",
+                    FilePath = "/wwwroot/Mt/pdf/MasterDegree/" + AuthorName+"/" + topic + ".pdf",
                     FileName = topic,
                     MasterName = AuthorName,
                     FileFullName = topic + ".pdf",
@@ -156,6 +156,18 @@ namespace prjcg2lab.Controllers
         public IActionResult DeleteMasterPaper(string filePath)
         {
             System.IO.File.Delete(@_dir+filePath);
+            using(var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.MasterPapers
+                            where q.FilePath == filePath
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+                
+            }
             return RedirectToAction("UpdateMasterPaper");
         }
     }
