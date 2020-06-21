@@ -52,7 +52,7 @@ namespace cg2labweb
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Dashboard}/{action=Dashboard}/{id?}");
+                    pattern: "{controller=Home}/{action=Institute}/{id?}");
             });
         }
     }

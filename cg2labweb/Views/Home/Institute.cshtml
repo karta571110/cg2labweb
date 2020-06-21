@@ -1,0 +1,56 @@
+﻿@model IEnumerable<infra.ViewModels.ViewMasterPaper>
+@{
+    ViewData["Title"] = "Institute";
+    Layout = "~/Views/Shared/HomePage.cshtml";
+}
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+    </style>
+    <div class="container">
+        
+
+        <div  >
+            <h1 style="text-align: center;" >歷屆碩士生研究論文</h1>
+            <img style="width:30%;margin-left:35%;" src="~/Mt/img/ImgHome/CG2-黑白-removebg-preview.png" />
+        </div>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr role="row">
+                    <th>作者名</th>
+                    <th>題目</th>
+                    <th>上傳時間</th>
+                    
+                </tr>
+                <tr  role="row" class="odd">
+                    @foreach (var item in Model)
+                    {
+                        <td>@item.MasterName</td>
+                        <td><a href="~/Mt/pdf/MasterDegree/@item.MasterName/@item.FileFullName" target="_blank">@item.FileName</a></td>
+                        <td>@item.dateTime</td>
+                        
+                    }
+                </tr>
+            </table>
+        </div>
+
+        
+
+    </div>
+    
+

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using infra.Models;
+using Service;
+using infra.ViewModels;
 
 namespace cg2labweb.Controllers
 {
@@ -38,7 +40,41 @@ namespace cg2labweb.Controllers
         }
         public IActionResult Institute()
         {
-            return View();
+            var mpV = new List<ViewMasterPaper>();
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.MasterPapers
+                            orderby q.dateTime descending, q.Id ascending
+                            where q.Id != 0
+                            select new ViewMasterPaper
+                            {
+                                Id = q.Id,
+                                dateTime = q.dateTime,
+                                FileName = q.FileName,
+                                FilePath = q.FilePath,
+                                FileFullName = q.FileFullName,
+                                MasterName = q.MasterName
+                            };
+
+                if (query.Any())
+                {
+                    mpV = query.ToList();
+                }
+                //var result = query.ToList();
+                //foreach(var item in result)
+                //{
+                //    mpV.Add(new ViewMasterPaper
+                //    {
+                //        Id=item.Id,
+                //        dateTime=item.dateTime,
+                //        FileName=item.FileName,
+                //        FilePath=item.FilePath,
+                //        FileFullName=item.FileFullName,
+                //        MasterName=item.MasterName
+                //    });
+                //}
+            }
+            return View(mpV);
         }
 
         public IActionResult Device()
