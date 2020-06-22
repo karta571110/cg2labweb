@@ -46,7 +46,10 @@ namespace prjcg2lab.Controllers
             //}
             return View();
         }
-
+        public IActionResult UpdateUndergraduateStudentsWork()
+        {
+            return View();
+        }
         public IActionResult UpdatePaper()
         {
             

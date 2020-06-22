@@ -104,7 +104,45 @@ namespace cg2labweb.Controllers
             }
             return View(rsl);
         }
+        public IActionResult UndergraduateStudents()
+        {
+            var VUSW = new List<ViewUndergraduateStudentsWork>();
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.undergraduateStudentsWorks
+                            orderby q.dateTime descending, q.Id ascending
+                            where q.Id != 0
+                            select new ViewUndergraduateStudentsWork
+                            {
+                                Id = q.Id,
+                                dateTime = q.dateTime,
+                                teammate = q.teammate,
+                                topic = q.topic,
+                                youtubeId = q.youtubeId,
+                                
+                            };
 
+                if (query.Any())
+                {
+                    
+                    VUSW= query.ToList();
+                }
+                //var result = query.ToList();
+                //foreach(var item in result)
+                //{
+                //    mpV.Add(new ViewMasterPaper
+                //    {
+                //        Id=item.Id,
+                //        dateTime=item.dateTime,
+                //        FileName=item.FileName,
+                //        FilePath=item.FilePath,
+                //        FileFullName=item.FileFullName,
+                //        MasterName=item.MasterName
+                //    });
+                //}
+            }
+            return View(VUSW);
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
