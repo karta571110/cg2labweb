@@ -69,13 +69,22 @@ namespace Service.Migrations
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("googleDriveURL")
+                        .HasColumnType("text");
+
                     b.Property<string>("teammate")
                         .HasColumnType("text");
 
                     b.Property<string>("topic")
                         .HasColumnType("text");
 
+                    b.Property<string>("updaterName")
+                        .HasColumnType("text");
+
                     b.Property<string>("youtubeId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("youtubeURL")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

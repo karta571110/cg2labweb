@@ -25,8 +25,8 @@ namespace prjcg2lab.Controllers
             _dir = env.ContentRootPath ;
         }
         // GET: Dashboard
-        public IActionResult Dashboard()
-        {
+        public IActionResult Dashboard() => View();
+        //{
             
             //try
             //{
@@ -44,11 +44,85 @@ namespace prjcg2lab.Controllers
             //{
             //    Debug.WriteLine(ex.Message);
             //}
-            return View();
-        }
+           // return View();
+        //}
         public IActionResult UpdateUndergraduateStudentsWork()
         {
-            return View();
+           var viewUndergraduateStudentsWorks = new List<ViewUndergraduateStudentsWork>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.undergraduateStudentsWorks
+                            orderby q.dateTime descending, q.Id ascending
+                            where q.Id != 0
+                            select new ViewUndergraduateStudentsWork
+                            {
+                                Id = q.Id,
+                                dateTime = q.dateTime,
+                                googleDriveURL = q.googleDriveURL,
+                                teammate = q.teammate,
+                                topic = q.topic,
+                                youtubeId = q.youtubeId,
+                                youtubeURL=q.youtubeURL,
+                                updaterName=q.updaterName
+                            };
+
+                if (query.Any())
+                {
+                    viewUndergraduateStudentsWorks = query.ToList();
+                }
+                
+            }
+            return View(viewUndergraduateStudentsWorks);
+            
+        }
+        [HttpPost]
+        public IActionResult UpdateUndergraduateStudentsWork(string teammate, string topic,string youtubeURL,string googleDrive)
+        {
+            string dealYoutubeId()
+            {
+                var toRemove = "https://www.youtube.com/watch?v=";
+                var Result = youtubeURL.Replace(toRemove, "");
+                if (Result.Contains("&"))
+                {
+                   Result= Result.Remove(Result.IndexOf("&"));
+                    //Remove用法 ref:https://docs.microsoft.com/zh-tw/dotnet/api/system.string.remove?view=netcore-3.1
+                    //IndexOf用法 ref:http://a-jau.blogspot.com/2012/01/cstringindexoflastindexofsubstringsplit.html
+                }
+                return Result;
+            }
+            using (var content = new ContextFactory().dbContext())
+            {
+                var undergraduateStudents = new UndergraduateStudentsWork
+                {
+                   teammate=teammate,
+                   topic=topic,
+                   youtubeURL=youtubeURL,
+                   youtubeId= dealYoutubeId(),
+                   googleDriveURL =googleDrive,
+                    dateTime = DateTime.Now
+                };
+               
+                content.undergraduateStudentsWorks.Add(undergraduateStudents);
+                content.SaveChanges();
+            }
+            return RedirectToAction("UpdateUndergraduateStudentsWork");
+        }
+        public IActionResult DeleteUndergraduateStudentsWork(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.undergraduateStudentsWorks
+                            where q.Id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("UpdateUndergraduateStudentsWork");
         }
         public IActionResult UpdatePaper()
         {
@@ -85,6 +159,11 @@ namespace prjcg2lab.Controllers
                     item.CopyTo(fileStream);
                 }
             }
+            return RedirectToAction("UpdatePaper");
+        }        
+        public IActionResult DeleteHankPaper(string fileName)
+        {
+            System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/" + fileName);
             return RedirectToAction("UpdatePaper");
         }
         public IActionResult UpdateMasterPaper()
@@ -151,18 +230,14 @@ namespace prjcg2lab.Controllers
             }
             return RedirectToAction("UpdateMasterPaper");
         }
-        public IActionResult DeleteHankPaper(string fileName)
-        {
-            System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/" + fileName);
-            return RedirectToAction("UpdatePaper");
-        }
-        public IActionResult DeleteMasterPaper(string filePath)
+        
+        public IActionResult DeleteMasterPaper(string filePath,int id)
         {
             System.IO.File.Delete(@_dir+filePath);
             using(var content = new ContextFactory().dbContext())
             {
                 var query = from q in content.MasterPapers
-                            where q.FilePath == filePath
+                            where q.Id == id
                             select q;
                 if (query.FirstOrDefault() != null)
                 {

@@ -10,7 +10,9 @@ namespace infra.Models
         public string updaterName { get; set; }
         public string teammate { get; set; }
         public string topic { get; set; }
+        public string youtubeURL { get; set; }
         public string youtubeId { get; set; }
+        public string googleDriveURL { get; set; }
         public DateTime dateTime { get; set; }
     }
 }
