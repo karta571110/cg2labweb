@@ -27,27 +27,29 @@ namespace prjcg2lab.Controllers
         // GET: Dashboard
         public IActionResult Dashboard() => View();
         //{
-            
-            //try
-            //{
-            //    var cf = new ContextFactory().dbContext();
-            //    cf.Members.Add(new Member
-            //    {
 
-            //        Account = "ASdasd",
-            //        Password = "cxvvcb"
-            //    });
-            //    cf.SaveChanges();
-            //    //Debug.WriteLine("11111111111111");
-            //}
-            //catch(Exception ex)
-            //{
-            //    Debug.WriteLine(ex.Message);
-            //}
-           // return View();
+        //try
+        //{
+        //    var cf = new ContextFactory().dbContext();
+        //    cf.Members.Add(new Member
+        //    {
+
+        //        Account = "ASdasd",
+        //        Password = "cxvvcb"
+        //    });
+        //    cf.SaveChanges();
+        //    //Debug.WriteLine("11111111111111");
         //}
+        //catch(Exception ex)
+        //{
+        //    Debug.WriteLine(ex.Message);
+        //}
+        // return View();
+        //}
+        #region 專題生成果
         public IActionResult UpdateUndergraduateStudentsWork()
         {
+            
            var viewUndergraduateStudentsWorks = new List<ViewUndergraduateStudentsWork>();
 
             using (var content = new ContextFactory().dbContext())
@@ -124,48 +126,8 @@ namespace prjcg2lab.Controllers
             }
             return RedirectToAction("UpdateUndergraduateStudentsWork");
         }
-        public IActionResult UpdatePaper()
-        {
-            
-            var i = 1;
-            List<Research> rsl = new List<Research>();
-            DirectoryInfo dir = new DirectoryInfo("wwwroot/Mt/pdf/hank's");
-            FileInfo[] finfo = dir.GetFiles();
-            foreach (FileInfo item in finfo)
-            {
-                //FileInfo fi=new FileInfo(FileCollection )
-                //Debug.WriteLine(item.FullName);
-                rsl.Add(new Research()
-                {
-                    id = i,
-                    fileName = item.Name,
-                    justName = Path.GetFileNameWithoutExtension(item.FullName)
-
-                });
-                i++;
-                //[C#] 幾個常用的取路徑及檔名的方法
-                //ref:https://charleslin74.pixnet.net/blog/post/459749485-%5Bc%23%5D-%E5%B9%BE%E5%80%8B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%96%E8%B7%AF%E5%BE%91%E5%8F%8A%E6%AA%94%E5%90%8D%E7%9A%84%E6%96%B9%E6%B3%95
-            }
-            return View(rsl);
-        }
-        [HttpPost]
-        public IActionResult UpdatePaper(IEnumerable<IFormFile> files)
-        {
-            foreach (var item in files)
-            {
-                Debug.WriteLine(item.FileName);
-                using (var fileStream = new FileStream(Path.Combine(_dir + "/wwwroot/Mt/pdf/hank's", item.FileName), FileMode.Create, FileAccess.Write))
-                {
-                    item.CopyTo(fileStream);
-                }
-            }
-            return RedirectToAction("UpdatePaper");
-        }        
-        public IActionResult DeleteHankPaper(string fileName)
-        {
-            System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/" + fileName);
-            return RedirectToAction("UpdatePaper");
-        }
+        #endregion
+        #region 碩士論文
         public IActionResult UpdateMasterPaper()
         {
             List<ViewMasterPaper> mpV = new List<ViewMasterPaper>();
@@ -248,5 +210,51 @@ namespace prjcg2lab.Controllers
             }
             return RedirectToAction("UpdateMasterPaper");
         }
+        #endregion
+        #region Hank論文
+        public IActionResult UpdatePaper()
+        {
+
+            var i = 1;
+            List<Research> rsl = new List<Research>();
+            DirectoryInfo dir = new DirectoryInfo("wwwroot/Mt/pdf/hank's");
+            FileInfo[] finfo = dir.GetFiles();
+            foreach (FileInfo item in finfo)
+            {
+                //FileInfo fi=new FileInfo(FileCollection )
+                //Debug.WriteLine(item.FullName);
+                rsl.Add(new Research()
+                {
+                    id = i,
+                    fileName = item.Name,
+                    justName = Path.GetFileNameWithoutExtension(item.FullName)
+
+                });
+                i++;
+                //[C#] 幾個常用的取路徑及檔名的方法
+                //ref:https://charleslin74.pixnet.net/blog/post/459749485-%5Bc%23%5D-%E5%B9%BE%E5%80%8B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%96%E8%B7%AF%E5%BE%91%E5%8F%8A%E6%AA%94%E5%90%8D%E7%9A%84%E6%96%B9%E6%B3%95
+            }
+            return View(rsl);
+        }
+        [HttpPost]
+        public IActionResult UpdatePaper(IEnumerable<IFormFile> files)
+        {
+            foreach (var item in files)
+            {
+                Debug.WriteLine(item.FileName);
+                using (var fileStream = new FileStream(Path.Combine(_dir + "/wwwroot/Mt/pdf/hank's", item.FileName), FileMode.Create, FileAccess.Write))
+                {
+                    item.CopyTo(fileStream);
+                }
+            }
+            return RedirectToAction("UpdatePaper");
+        }
+        public IActionResult DeleteHankPaper(string fileName)
+        {
+            System.IO.File.Delete(@"wwwroot/Mt/pdf/hank's/" + fileName);
+            return RedirectToAction("UpdatePaper");
+        }
+        #endregion
+
     }
 }
