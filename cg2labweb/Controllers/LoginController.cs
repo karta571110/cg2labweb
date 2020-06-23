@@ -28,7 +28,7 @@ namespace cg2labweb.Controllers
         {
             return View();
         }
-        
+        //
         [HttpPost]
         public IActionResult Registered(StudentData stuDt)
         {
