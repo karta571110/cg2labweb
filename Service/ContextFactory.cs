@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using infra.Models;
 
 namespace Service
 {
@@ -11,7 +12,7 @@ namespace Service
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseMySQL("server=localhost;database=Cg2Lab;user=cg2lab;password=cg2lab;SslMode=none");
+            optionsBuilder.UseMySQL("server=192.168.1.68;database=Cg2Lab;user=cg2lab;password=cg2lab;SslMode=none");
             return new ApplicationDbContext(optionsBuilder.Options);
         }
     }

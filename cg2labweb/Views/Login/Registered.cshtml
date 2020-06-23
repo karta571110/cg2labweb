@@ -1,0 +1,101 @@
+﻿@model infra.ViewModels.ViewStudentData
+@{
+    ViewBag.Title = "Device";
+    Layout = "~/Views/Shared/HomePage.cshtml";
+}
+
+<!doctype html>
+<html>
+<head>
+
+    <style>
+
+        h1 {
+            color: black;
+            text-align: center;
+        }
+
+        .row .center {
+            margin-left: 45%;
+        }
+
+        .featurette-image {
+            width: 75%;
+            height: 75%;
+        }
+
+        .text {
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<body>
+    @{
+        ViewData["Title"] = "學生註冊";
+    }
+
+    <h1>學生註冊</h1>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()//防CSRF攻擊
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Studentid, htmlAttributes: new { @class = "control-label col-md-2" });
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Studentid, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Studentid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-md-2" });
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Passwora, htmlAttributes: new { @class = "control-label col-md-2" });
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Passwora, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Passwora, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" });
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="會員註冊" class="btn-default" />
+                    @ViewBag.Message
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!-- Bootstrap core JavaScript
+     ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../Mt/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../Mt/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../Mt/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../Mt/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

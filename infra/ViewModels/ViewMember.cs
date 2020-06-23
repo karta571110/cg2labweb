@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace infra.Models
+namespace infra.ViewModels
 {
-    public class Member
+    public class ViewMember
     {
-        [Key]
         public int Id { get; set; }
         public string Account { get; set; }
         public string Password { get; set; }

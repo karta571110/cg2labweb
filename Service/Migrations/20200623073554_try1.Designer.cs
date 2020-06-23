@@ -8,8 +8,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200615141416_AddReaserch")]
-    partial class AddReaserch
+    [Migration("20200623073554_try1")]
+    partial class try1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace Service.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("cg2labweb.Models.Member", b =>
+            modelBuilder.Entity("infra.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,9 +35,9 @@ namespace Service.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("cg2labweb.Models.Research", b =>
+            modelBuilder.Entity("infra.Models.Research", b =>
                 {
-                    b.Property<int>("key")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -47,9 +47,32 @@ namespace Service.Migrations
                     b.Property<string>("justName")
                         .HasColumnType("text");
 
-                    b.HasKey("key");
+                    b.HasKey("id");
 
                     b.ToTable("Researches");
+                });
+
+            modelBuilder.Entity("infra.Models.StudentData", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Passwora")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Studentid")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("StudentDatas");
                 });
 #pragma warning restore 612, 618
         }

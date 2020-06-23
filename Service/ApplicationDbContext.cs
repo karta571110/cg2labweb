@@ -14,6 +14,6 @@ namespace Service
 
         public DbSet<Member> Members { get; set; }
         public DbSet<Research> Researches { get; set; }
-        
+        public DbSet<StudentData> StudentDatas { get; set; }
     }
 }
