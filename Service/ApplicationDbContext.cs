@@ -18,6 +18,7 @@ namespace Service
         public DbSet<UndergraduateStudentsWork> undergraduateStudentsWorks { get; set; }
         public DbSet<HankPageJournalPaper> HankPageJournalPapers { get; set; }
         public DbSet<HankPageSeminarPaper> HankPageSeminarPapers { get; set; }
+        public DbSet<StudentData> StudentData { get; set; }
     }
 
 }

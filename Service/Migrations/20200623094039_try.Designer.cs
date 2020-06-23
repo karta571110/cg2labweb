@@ -9,8 +9,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200623075214_MCTable")]
-    partial class MCTable
+    [Migration("20200623094039_try")]
+    partial class @try
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
