@@ -17,34 +17,6 @@ namespace Service.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("infra.Models.HankPageJournalPaper", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("JournalPaper")
-                        .HasColumnType("text");
-
-                    b.HasKey("id");
-
-                    b.ToTable("HankPageJournalPapers");
-                });
-
-            modelBuilder.Entity("infra.Models.HankPageSeminarPaper", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("SeminarPaper")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HankPageSeminarPapers");
-                });
-
             modelBuilder.Entity("infra.Models.MasterPaper", b =>
                 {
                     b.Property<int>("Id")

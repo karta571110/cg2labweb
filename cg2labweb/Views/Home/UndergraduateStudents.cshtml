@@ -1,0 +1,85 @@
+﻿@model IEnumerable<infra.ViewModels.ViewUndergraduateStudentsWork>
+@{
+    ViewData["Title"] = "UndergraduateStudents";
+    Layout = "~/Views/Shared/HomePage.cshtml";
+}
+<head>
+    <style>
+
+
+        h1 {
+            color: black;
+            text-align: center;
+        }
+
+        .row .center {
+            margin-left: 45%;
+        }
+
+        .featurette-image {
+            width: 75%;
+            height: 75%;
+        }
+
+            .featurette-image:hover {
+                width: 100%;
+                height: 100%;
+            }
+    </style>
+
+</head>
+<body>
+    <div>
+        <h1>歷屆專題生成果</h1>
+        <img style="width:30%;margin-left:35%;" src="~/Mt/img/ImgHome/Salon_2-removebg-preview.png" />
+        
+    </div>
+    <div style="overflow-x:auto; margin-left:25%">
+        
+
+
+        @foreach (var item in Model)
+        {
+            <p><h2>@item.topic<small>  製作人員:@item.teammate</small></h2><span><small>@item.dateTime</small></span></p>
+
+            <button id="@item.topic" class="btn btn-info" onclick="onYouTubeIframeAPIReady(@item.teammate,'@item.youtubeId')">觀看DEMO影片</button>
+            <p>
+                <div id="@item.teammate">
+
+                </div>
+            </p>
+        }
+
+    </div>
+    
+
+    <script type="text/javascript">
+        var player;
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api"; // Take the API address.
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); // Include the API inside the page.
+        function onYouTubeIframeAPIReady(id, youtubeid) {
+            
+
+            
+            /**/
+            player = new YT.Player(id, {
+                /**/
+                videoId: youtubeid, //你的Youtube 影片ID
+                events: {
+                    onStateChange: function (event) {
+                        //if (event.data == YT.PlayerState.PLAYING) {
+                        //  alert("hello!"); //這邊是當開始播放後，需要做的動作
+                        //}
+                    }
+                },
+                height: 480,
+                width: 640
+            });
+
+
+        }
+    </script>
+
+</body>
