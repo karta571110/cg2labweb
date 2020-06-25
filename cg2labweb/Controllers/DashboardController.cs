@@ -47,7 +47,7 @@ namespace prjcg2lab.Controllers
         // return View();
         //}
         #region 專題生成果
-        public IActionResult UpdateUndergraduateStudentsWork()
+        public IActionResult ViewUndergraduateStudentsWork()
         {
             
            var viewUndergraduateStudentsWorks = new List<ViewUndergraduateStudentsWork>();
@@ -78,37 +78,42 @@ namespace prjcg2lab.Controllers
             return View(viewUndergraduateStudentsWorks);
             
         }
+        public IActionResult UpdateUndergraduateStudentsWork() => View();              
         [HttpPost]
-        public IActionResult UpdateUndergraduateStudentsWork(string teammate, string topic,string youtubeURL,string googleDrive)
+        public IActionResult UpdateUndergraduateStudentsWork(ViewUndergraduateStudentsWork undergraduateStudentsWork)// string teammate, string topic,string youtubeURL,string googleDrive)
         {
-            string dealYoutubeId()
+            if (ModelState.IsValid)
             {
-                var toRemove = "https://www.youtube.com/watch?v=";
-                var Result = youtubeURL.Replace(toRemove, "");
-                if (Result.Contains("&"))
+                string dealYoutubeId()
                 {
-                   Result= Result.Remove(Result.IndexOf("&"));
-                    //Remove用法 ref:https://docs.microsoft.com/zh-tw/dotnet/api/system.string.remove?view=netcore-3.1
-                    //IndexOf用法 ref:http://a-jau.blogspot.com/2012/01/cstringindexoflastindexofsubstringsplit.html
+                    var toRemove = "https://www.youtube.com/watch?v=";
+                    var Result = undergraduateStudentsWork.youtubeURL.Replace(toRemove, "");
+                    if (Result.Contains("&"))
+                    {
+                        Result = Result.Remove(Result.IndexOf("&"));
+                        //Remove用法 ref:https://docs.microsoft.com/zh-tw/dotnet/api/system.string.remove?view=netcore-3.1
+                        //IndexOf用法 ref:http://a-jau.blogspot.com/2012/01/cstringindexoflastindexofsubstringsplit.html
+                    }
+                    return Result;
                 }
-                return Result;
-            }
-            using (var content = new ContextFactory().dbContext())
-            {
-                var undergraduateStudents = new UndergraduateStudentsWork
+                using (var content = new ContextFactory().dbContext())
                 {
-                   teammate=teammate,
-                   topic=topic,
-                   youtubeURL=youtubeURL,
-                   youtubeId= dealYoutubeId(),
-                   googleDriveURL =googleDrive,
-                    dateTime = DateTime.Now
-                };
-               
-                content.undergraduateStudentsWorks.Add(undergraduateStudents);
-                content.SaveChanges();
+                    var undergraduateStudents = new UndergraduateStudentsWork
+                    {
+                        teammate = undergraduateStudentsWork.teammate,
+                        topic = undergraduateStudentsWork.topic,
+                        youtubeURL = undergraduateStudentsWork.youtubeURL,
+                        youtubeId = dealYoutubeId(),
+                        googleDriveURL = undergraduateStudentsWork.googleDriveURL,
+                        dateTime = DateTime.Now
+                    };
+
+                    content.undergraduateStudentsWorks.Add(undergraduateStudents);
+                    content.SaveChanges();
+                    return RedirectToAction("ViewUndergraduateStudentsWork");
+                }
             }
-            return RedirectToAction("UpdateUndergraduateStudentsWork");
+            return View(undergraduateStudentsWork);
         }
         public IActionResult DeleteUndergraduateStudentsWork(int id)
         {

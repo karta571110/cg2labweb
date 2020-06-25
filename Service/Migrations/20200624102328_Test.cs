@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Service.Migrations
 {
-    public partial class @try : Migration
+    public partial class Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,6 +66,22 @@ namespace Service.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StudentData",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(nullable: true),
+                    Passwora = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Studentid = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentData", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "undergraduateStudentsWorks",
                 columns: table => new
                 {
@@ -98,6 +114,9 @@ namespace Service.Migrations
 
             migrationBuilder.DropTable(
                 name: "Members");
+
+            migrationBuilder.DropTable(
+                name: "StudentData");
 
             migrationBuilder.DropTable(
                 name: "undergraduateStudentsWorks");
