@@ -16,7 +16,7 @@ namespace infra.ViewModels
         public string topic { get; set; }
         [Required(ErrorMessage = "不可空白")]
         [Url]
-        [RegularExpression("\\w{5}\\:\\/\\/\\w{3}\\.\\w{7}\\.\\w{3}\\/?\\w{5}\\?v\\=[a-zA-Z0-9_-]{11}\\&?t?\\=?[0-9]*s?", ErrorMessage ="這個網址不是youtube格式")]
+        [RegularExpression("\\w{5}\\:\\/\\/\\w{3}\\.\\w{7}\\.\\w{3}\\/?\\w{5}\\?v\\=[a-zA-Z0-9_-]{11}\\&?t?\\=?[0-9]*s?", ErrorMessage ="這個網址不是youtube (或是你嘗試輸入youtube播放清單的影片)")]
         public string youtubeURL { get; set; }
         public string youtubeId { get; set; }
         [Required(ErrorMessage = "不可空白")]
