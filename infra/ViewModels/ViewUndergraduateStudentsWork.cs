@@ -21,7 +21,7 @@ namespace infra.ViewModels
         public string youtubeId { get; set; }
         [Required(ErrorMessage = "不可空白")]
         [Url]
-        [RegularExpression("https:\\/\\/drive\\.google\\.com\\/file\\/d\\/[A-Za-z0-9-]*\\/view\\?usp=sharing", ErrorMessage ="這個網址不是google雲端")]
+        [RegularExpression("https:\\/\\/drive\\.google\\.com\\/file\\/d\\/[A-Za-z0-9-_]*\\/view\\?usp=sharing", ErrorMessage ="這個網址不是google雲端")]
         public string googleDriveURL { get; set; }
         public DateTime dateTime { get; set; }
     }
