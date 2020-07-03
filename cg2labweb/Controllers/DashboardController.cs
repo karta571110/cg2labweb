@@ -260,6 +260,132 @@ namespace prjcg2lab.Controllers
             return RedirectToAction("UpdatePaper");
         }
         #endregion
+        #region 期刊論文
+        public IActionResult ViewJournalPapersList()
+        {
 
+            var viewHankPageJournalPapers = new List<ViewHankPageJournalPaper>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageJournalPapers
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewHankPageJournalPaper
+                            {
+                                id = q.id,
+                                JournalPaper = q.JournalPaper
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageJournalPapers = query.ToList();
+                }
+
+            }
+            return View(viewHankPageJournalPapers);
+
+        }
+        public IActionResult JournalPapersList() => View();
+        [HttpPost]
+        public IActionResult JournalPapersList(ViewHankPageJournalPaper hankPageJournalPaper)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewHankPageJournalPaper hpj = hankPageJournalPaper;
+
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var HankPageJournalPaper = new HankPageJournalPaper()
+                    {
+                        JournalPaper = hpj.JournalPaper
+                    };
+                    content.HankPageJournalPapers.Add(HankPageJournalPaper);
+                    content.SaveChanges();
+                    return RedirectToAction("JournalPapersList");
+                }
+            }
+            return View(hankPageJournalPaper);
+        }
+        public IActionResult DeleteJournalPapers(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageJournalPapers
+                            where q.id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewJournalPapersList");
+        }
+        #endregion
+        #region 研討會論文       
+        public IActionResult ViewSeminarPapers()
+        {
+
+            var viewHankPageSeminarPapers = new List<ViewHankPageSeminarPaper>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageSeminarPapers
+                            orderby q.Id
+                            where q.Id != 0
+                            select new ViewHankPageSeminarPaper
+                            {
+                                Id = q.Id,
+                                SeminarPaper=q.SeminarPaper
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageSeminarPapers = query.ToList();
+                }
+
+            }
+            return View(viewHankPageSeminarPapers);
+
+        }
+        public IActionResult SeminarPapers() => View();
+       [HttpPost]
+        public IActionResult SeminarPapers(ViewHankPageSeminarPaper viewHankPageSeminarPaper)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var hankPageSeminarPaper = new HankPageSeminarPaper
+                    {
+                        SeminarPaper=viewHankPageSeminarPaper.SeminarPaper
+                    };
+
+                    content.HankPageSeminarPapers.Add(hankPageSeminarPaper);
+                    content.SaveChanges();
+                    return RedirectToAction("SeminarPapers");
+                }
+            }
+            return View(viewHankPageSeminarPaper);
+        }
+        public IActionResult DeleteSeminarPapers(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageSeminarPapers
+                            where q.Id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewSeminarPapers");
+        }
+        #endregion
     }
 }

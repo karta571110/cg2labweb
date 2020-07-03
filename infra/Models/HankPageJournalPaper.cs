@@ -7,6 +7,8 @@ namespace infra.Models
    public class HankPageJournalPaper
     {
         public int id { get; set; }
+
         public string JournalPaper { get; set; }
+        
     }
 }
