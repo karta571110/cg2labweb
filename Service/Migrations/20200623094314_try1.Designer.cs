@@ -9,8 +9,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200623075214_MCTable")]
-    partial class MCTable
+    [Migration("20200623094314_try1")]
+    partial class try1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,6 +88,29 @@ namespace Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("infra.Models.StudentData", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Passwora")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Studentid")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("StudentData");
                 });
 
             modelBuilder.Entity("infra.Models.UndergraduateStudentsWork", b =>

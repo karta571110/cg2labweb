@@ -3,7 +3,6 @@
     ViewBag.Title = "Device";
     Layout = "~/Views/Shared/HomePage.cshtml";
 }
-
 <!doctype html>
 <html>
 <head>
@@ -54,7 +53,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-md-2" });
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" });
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
@@ -62,10 +61,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Passwora, htmlAttributes: new { @class = "control-label col-md-2" });
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" });
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Passwora, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Passwora, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
 

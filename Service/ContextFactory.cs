@@ -12,7 +12,7 @@ namespace Service
         public ApplicationDbContext dbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseMySQL("server=localhost;database=Cg2Lab;user=cg2lab;password=cg2lab;SslMode=none");
+            optionsBuilder.UseMySQL("server=localhost;database=cg2lab;user=root;password=mylovelife27;SslMode=none");
             return new ApplicationDbContext(optionsBuilder.Options); 
         }
         public ApplicationDbContext CreateDbContext(string[] args)

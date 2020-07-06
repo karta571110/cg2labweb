@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Service.Migrations
 {
-    public partial class MCTable : Migration
+    public partial class @try : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

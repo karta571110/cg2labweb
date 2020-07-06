@@ -9,8 +9,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200621192015_addUSWModel")]
-    partial class addUSWModel
+    [Migration("20200623094039_try")]
+    partial class @try
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,34 @@ namespace Service.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("infra.Models.HankPageJournalPaper", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("JournalPaper")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("HankPageJournalPapers");
+                });
+
+            modelBuilder.Entity("infra.Models.HankPageSeminarPaper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeminarPaper")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HankPageSeminarPapers");
+                });
 
             modelBuilder.Entity("infra.Models.MasterPaper", b =>
                 {
@@ -71,13 +99,22 @@ namespace Service.Migrations
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("googleDriveURL")
+                        .HasColumnType("text");
+
                     b.Property<string>("teammate")
                         .HasColumnType("text");
 
                     b.Property<string>("topic")
                         .HasColumnType("text");
 
+                    b.Property<string>("updaterName")
+                        .HasColumnType("text");
+
                     b.Property<string>("youtubeId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("youtubeURL")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
