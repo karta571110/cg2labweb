@@ -390,7 +390,138 @@ namespace prjcg2lab.Controllers
         }
         #endregion
         #region 計畫
+        public IActionResult ViewHankProject()
+        {
 
+            var viewHankPageProjects = new List<ViewHankPageProject>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.hankPageProjects
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewHankPageProject
+                            {
+                                id = q.id,
+                                schoolYear = q.schoolYear,
+                                projectName=q.projectName,
+                                projectTopice=q.projectTopice
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageProjects = query.ToList();
+                }
+
+            }
+            return View(viewHankPageProjects);
+
+        }
+        public IActionResult UpdateProject() => View();
+        [HttpPost]
+        public IActionResult UpdateProject(ViewHankPageProject viewHankPageProject)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var hankPageProject = new HankPageProject
+                    {
+                        schoolYear = viewHankPageProject.schoolYear,
+                        projectName=viewHankPageProject.projectName,
+                        projectTopice=viewHankPageProject.projectTopice
+                    };
+
+                    content.hankPageProjects.Add(hankPageProject);
+                    content.SaveChanges();
+                    return RedirectToAction("UpdateProject");
+                }
+            }
+            return View(viewHankPageProject);
+        }
+        public IActionResult DeleteProject(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageSeminarPapers
+                            where q.Id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewHankProject");
+        }
+        #endregion
+        #region 產學研究
+        public IActionResult ViewIndustryResearch()
+        {
+
+            var viewIndustryResearches = new List<ViewIndustryResearch>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.industryResearches
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewIndustryResearch
+                            {
+                                id = q.id,
+                                schoolYear = q.schoolYear,
+                                projectName = q.projectName,
+                                projectTopice = q.projectTopice
+                            };
+
+                if (query.Any())
+                {
+                    viewIndustryResearches = query.ToList();
+                }
+
+            }
+            return View(viewIndustryResearches);
+
+        }
+        public IActionResult UpdateIndustryResearch() => View();
+        [HttpPost]
+        public IActionResult UpdateIndustryResearch(ViewIndustryResearch viewIndustryResearch)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var industryResearch = new IndustryResearch
+                    {
+                        schoolYear = viewIndustryResearch.schoolYear,
+                        projectName = viewIndustryResearch.projectName,
+                        projectTopice = viewIndustryResearch.projectTopice
+                    };
+
+                    content.industryResearches.Add(industryResearch);
+                    content.SaveChanges();
+                    return RedirectToAction("UpdateIndustryResearch");
+                }
+            }
+            return View(viewIndustryResearch);
+        }
+        public IActionResult DeleteIndustryResearch(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.industryResearches
+                            where q.id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewIndustryResearch");
+        }
         #endregion
     }
 }
