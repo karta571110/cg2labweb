@@ -95,16 +95,21 @@
                                 <td>98 </td>
                                 <td>國科會計畫</td>
                                 <td>三維網格之漸進式數位浮水印認證之研究</td>
-                                @foreach (var item in Model)
+
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                for (int i = 0; i < item.viewHankPageProjects.Count; i++)
                                 {
-                                    for (int i = 0; i < item.viewHankPageProjects.Count; i++)
-                                    {
+                                    <tr>
                                         <td>@item.viewHankPageProjects[i].schoolYear </td>
                                         <td>@item.viewHankPageProjects[i].projectTopice</td>
                                         <td>@item.viewHankPageProjects[i].projectName</td>
-                                    }
+                                    </tr>
                                 }
-                            </tr>
+                            }
+
                         </table>
                     </div>
                     <h4><strong>產學研究</strong></h4>
@@ -119,16 +124,21 @@
                                 <td>97學年度</td>
                                 <td>產學研究</td>
                                 <td>相片鉛筆速描效果自動轉換系統技術之開發與研究</td>
-                                @foreach (var item in Model)
+
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                for (int i = 0; i < item.ViewIndustryResearches.Count; i++)
                                 {
-                                    for (int i = 0; i < item.ViewIndustryResearches.Count; i++)
-                                    {
+                                    <tr>
                                         <td>@item.ViewIndustryResearches[i].schoolYear</td>
                                         <td>@item.ViewIndustryResearches[i].projectTopice</td>
                                         <td>@item.ViewIndustryResearches[i].projectName</td>
-                                    }
+                                    </tr>
                                 }
-                            </tr>
+                            }
+
                         </table>
                     </div>
                     <hr class="featurette-divider">

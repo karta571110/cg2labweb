@@ -58,7 +58,7 @@
                                         <tr role="row" class="odd">
 
                                             <td class="sorting_1" tabindex="0"><a href="~/Mt/pdf/hank's/@item.fileName" target="_blank">@item.justName</a></td>
-                                            <td class="" onclick="return confirm('確定要刪除嗎?')">@Html.ActionLink("Delete", "DeleteHankPaper", new { filePat = item.fileName })</td>
+                                            <td class="" onclick="return confirm('確定要刪除嗎?')">@Html.ActionLink("Delete", "DeleteHankPaper", new { fileName = item.fileName })</td>
                                         </tr>
                                     }
 
