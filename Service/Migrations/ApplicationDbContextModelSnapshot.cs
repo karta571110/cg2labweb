@@ -17,6 +17,29 @@ namespace Service.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("infra.Models.HankPageHonor", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Award")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DoWhat")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("schoolYear")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("hankPageHonors");
+                });
+
             modelBuilder.Entity("infra.Models.HankPageJournalPaper", b =>
                 {
                     b.Property<int>("id")
@@ -31,6 +54,26 @@ namespace Service.Migrations
                     b.ToTable("HankPageJournalPapers");
                 });
 
+            modelBuilder.Entity("infra.Models.HankPageProject", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("projectName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("projectTopice")
+                        .HasColumnType("text");
+
+                    b.Property<int>("schoolYear")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("hankPageProjects");
+                });
+
             modelBuilder.Entity("infra.Models.HankPageSeminarPaper", b =>
                 {
                     b.Property<int>("Id")
@@ -43,6 +86,26 @@ namespace Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HankPageSeminarPapers");
+                });
+
+            modelBuilder.Entity("infra.Models.IndustryResearch", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("projectName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("projectTopice")
+                        .HasColumnType("text");
+
+                    b.Property<int>("schoolYear")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("industryResearches");
                 });
 
             modelBuilder.Entity("infra.Models.MasterPaper", b =>

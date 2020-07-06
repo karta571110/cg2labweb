@@ -1,0 +1,52 @@
+﻿@model infra.ViewModels.ViewMasterPaper
+@{
+    ViewData["Title"] = "MasterPaper";
+    Layout = "~/Views/Shared/Dash_Layout.cshtml";
+}
+
+    <div class="content-wrapper" style="min-height: 431px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="col">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">上傳碩士論文</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" asp-controller="Dashboard" asp-action="MasterPaper"
+                          enctype="multipart/form-data" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">作者姓名</label>
+                                <input type="text" class="form-control" id="AuthorName" name="AuthorName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">題目名稱</label>
+                                <input type="text" class="form-control" id="topic" name="topic" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputFile">File input</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="btn btn-default" id="exampleInputFile" name="MasterPdfFile" multiple accept=".pdf" required>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('確定要上傳嗎?')">
+                                上傳
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+

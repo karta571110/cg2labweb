@@ -133,6 +133,8 @@ namespace prjcg2lab.Controllers
         }
         #endregion
         #region 碩士論文
+        public IActionResult MasterPaper() => View();
+        
         public IActionResult UpdateMasterPaper()
         {
             List<ViewMasterPaper> mpV = new List<ViewMasterPaper>();
@@ -172,7 +174,7 @@ namespace prjcg2lab.Controllers
             return View(mpV);
         }
         [HttpPost]
-        public IActionResult UpdateMasterPaper(string AuthorName,string topic,IFormFile MasterPdfFile)
+        public IActionResult MasterPaper(string AuthorName,string topic,IFormFile MasterPdfFile)
         {
             if (!Directory.Exists(_dir + "/wwwroot/Mt/pdf/MasterDegree/"+ AuthorName))
             {
@@ -195,7 +197,7 @@ namespace prjcg2lab.Controllers
                 content.MasterPapers.Add(mp);
                 content.SaveChanges();
             }
-            return RedirectToAction("UpdateMasterPaper");
+            return RedirectToAction("MasterPaper");
         }
         
         public IActionResult DeleteMasterPaper(string filePath,int id)
@@ -386,6 +388,9 @@ namespace prjcg2lab.Controllers
             }
             return RedirectToAction("ViewSeminarPapers");
         }
+        #endregion
+        #region 計畫
+
         #endregion
     }
 }
