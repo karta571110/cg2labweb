@@ -523,5 +523,74 @@ namespace prjcg2lab.Controllers
             return RedirectToAction("ViewIndustryResearch");
         }
         #endregion
+        #region 榮譽榜
+        public IActionResult ViewHankPageHonor()
+        {
+
+            var viewHankPageHonors = new List<ViewHankPageHonor>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.hankPageHonors
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewHankPageHonor
+                            {
+                                id = q.id,
+                                schoolYear = q.schoolYear,
+                                Name = q.Name,
+                                DoWhat = q.DoWhat,
+                                Award=q.Award
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageHonors = query.ToList();
+                }
+
+            }
+            return View(viewHankPageHonors);
+
+        }
+        public IActionResult UpdateHonors() => View();
+        [HttpPost]
+        public IActionResult UpdateHonors(ViewHankPageHonor viewHankPageHonor)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var hankPageHonor = new HankPageHonor
+                    {
+                        schoolYear = viewHankPageHonor.schoolYear,
+                        Name = viewHankPageHonor.Name,
+                        DoWhat = viewHankPageHonor.DoWhat,
+                        Award = viewHankPageHonor.Award
+                    };
+
+                    content.hankPageHonors.Add(hankPageHonor);
+                    content.SaveChanges();
+                    return RedirectToAction("UpdateHonors");
+                }
+            }
+            return View(viewHankPageHonor);
+        }
+        public IActionResult DeleteHonors(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.hankPageHonors
+                            where q.id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewHankPageHonor");
+        }
+        #endregion
     }
 }
