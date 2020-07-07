@@ -23,5 +23,8 @@ namespace infra.ViewModels
         [Required(ErrorMessage = "請輸入學號")]
         [RegularExpression("^\\d[A]\\d{6}", ErrorMessage = "學號規格錯誤")]
         public string Studentid { get; set; }
+
+        [Required(ErrorMessage ="請選專題生or研究生")]
+        public string Status { get; set; }
     }
 }
