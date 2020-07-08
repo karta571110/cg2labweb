@@ -1,0 +1,48 @@
+﻿@model infra.Models.HankPageSeminarPaper
+@{
+    ViewData["Title"] = "研討會論文更新";
+    Layout = "~/Views/Shared/Dash_Layout.cshtml";
+}
+
+<div class="content-wrapper" style="min-height: 431px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="col">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">研討會論文更新</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("SeminarPapers", "Dashboard", FormMethod.Post))
+                {
+
+                    <!--<form role="form" asp-controller="Dashboard" asp-action="UpdateUndergraduateStudentsWork"
+                    enctype="multipart/form-data" method="post">-->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">名稱</label>
+                            @Html.EditorFor(model => model.SeminarPaper, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SeminarPaper, "", new { @class = "text-danger" })
+                            <!--<input type="text" class="form-control" id="AuthorName" name="teammate" required>-->
+                        </div>
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('確定要上傳嗎?')">
+                            上傳
+                        </button>
+                    </div>
+                    <!--</form>-->
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<infra.ViewModels.ViewUndergraduateStudentsWork>
+﻿@model infra.ViewModels.ViewUndergraduateStudentsWork
 @{
     ViewData["Title"] = "UpdateUndergraduateStudentsWork";
     Layout = "~/Views/Shared/Dash_Layout.cshtml";
@@ -14,24 +14,35 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" asp-controller="Dashboard" asp-action="UpdateUndergraduateStudentsWork"
-                          enctype="multipart/form-data" method="post">
+                    @using (Html.BeginForm("UpdateUndergraduateStudentsWork", "Dashboard", FormMethod.Post))
+                    {
+                        
+                        <!--<form role="form" asp-controller="Dashboard" asp-action="UpdateUndergraduateStudentsWork"
+        enctype="multipart/form-data" method="post">-->
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">作者姓名<small>(如果有2人以上請照範例打 EX:王XX、劉XX)</small></label>
-                                <input type="text" class="form-control" id="AuthorName" name="teammate" required>
+                                @Html.EditorFor(model => model.teammate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.teammate, "", new { @class = "text-danger" })
+                                <!--<input type="text" class="form-control" id="AuthorName" name="teammate" required>-->
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">題目名稱</label>
-                                <input type="text" class="form-control" id="topic" name="topic" required>
+                                @Html.EditorFor(model => model.topic, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.topic, "", new { @class = "text-danger" })
+                                <!--<input type="text" class="form-control" id="topic" name="topic" required>-->
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Youtube網址</label>
-                                <input type="url" class="form-control" id="topic" name="youtubeURL" required>
+                                @Html.EditorFor(model => model.youtubeURL, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.youtubeURL, "", new { @class = "text-danger" })
+                                <!--<input type="url" class="form-control" id="topic" name="youtubeURL" required>-->
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">雲端網址</label>
-                                <input type="url" class="form-control" id="topic" name="googleDrive" required>
+                                @Html.EditorFor(model => model.googleDriveURL, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.googleDriveURL, "", new { @class = "text-danger" })
+                                <!--<input type="url" class="form-control" id="topic" name="googleDrive" required>-->
                             </div>
 
                         </div>
@@ -42,56 +53,11 @@
                                 上傳
                             </button>
                         </div>
-                    </form>
+                        <!--</form>-->
+                    }
                 </div>
             </div>
-            <div class="row">
-                <div class="card-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row">
-                            <div class="col-sm-12">
-
-                                <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">作者</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">題目</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">Youtube網址</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">雲端網址</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">上傳者</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">上傳時間</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr role="row" class="odd">
-
-                                                <td class="sorting_1" tabindex="0">@item.teammate</td>
-                                                <td class="sorting_1" tabindex="0">@item.topic</td>
-                                                <td class="sorting_1" tabindex="0"><a href="@item.youtubeURL">觀看成果</a></td>
-                                                <td class="sorting_1" tabindex="0"><a href="@item.googleDriveURL">下載</a></td>
-                                                <td class="sorting_1" tabindex="0">@item.updaterName</td>
-                                                <td class="sorting_1" tabindex="0">@item.dateTime</td>
-                                                <td class="btn btn-default" onclick="return confirm('確定要刪除嗎?')">@Html.ActionLink("Delete", "DeleteUndergraduateStudentsWork", new { id = item.Id })</td>
-                                            </tr>
-                                        }
-
-                                    </tbody>
-                                    <tfoot>
-
-                                    </tfoot>
-                                </table>
-
-                            </div>
-                            <!--</div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>    -->
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.row -->
+            
         </div>
     </div>
 

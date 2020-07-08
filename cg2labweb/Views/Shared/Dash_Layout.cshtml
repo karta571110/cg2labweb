@@ -133,15 +133,35 @@
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon far fa-plus-square"></i>
                                             <p>
-                                                Hank
+                                                Hank個人網站
                                                 <i class="fas fa-angle-left right"></i>
                                             </p>
                                         </a>
                                         <ul class="nav nav-treeview">
                                             <li class="nav-item">
                                                 <a href="@Url.Action("UpdatePaper","Dashboard")" class="nav-link">
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="far fa-book nav-icon"></i>
                                                     <p>上傳論文</p>
+                                                </a>
+                                                <a href="@Url.Action("ViewJournalPapersList","Dashboard")" class="nav-link">
+                                                    <i class="far fa-book nav-icon"></i>
+                                                    <p>期刊論文清單</p>
+                                                </a>
+                                                <a href="@Url.Action("ViewSeminarPapers","Dashboard")" class="nav-link">
+                                                    <i class="far fa-book nav-icon"></i>
+                                                    <p>研討會論文清單</p>
+                                                </a>
+                                                <a href="@Url.Action("ViewHankProject","Dashboard")" class="nav-link">
+                                                    <i class="far fa-book nav-icon"></i>
+                                                    <p>計畫清單</p>
+                                                </a>
+                                                <a href="@Url.Action("ViewIndustryResearch","Dashboard")" class="nav-link">
+                                                    <i class="far fa-book nav-icon"></i>
+                                                    <p>產學研究</p>
+                                                </a>
+                                                <a href="@Url.Action("ViewHankPageHonor","Dashboard")" class="nav-link">
+                                                    <i class="far fa-book nav-icon" ></i>
+                                                    <p>榮譽榜</p>
                                                 </a>
                                             </li>
                                         </ul>
@@ -153,7 +173,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="@Url.Action("UpdateUndergraduateStudentsWork","Dashboard")" class="nav-link">
+                                        <a href="@Url.Action("ViewUndergraduateStudentsWork","Dashboard")" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>專題生成果上傳</p>
                                         </a>

@@ -47,7 +47,7 @@ namespace prjcg2lab.Controllers
         // return View();
         //}
         #region 專題生成果
-        public IActionResult UpdateUndergraduateStudentsWork()
+        public IActionResult ViewUndergraduateStudentsWork()
         {
             
            var viewUndergraduateStudentsWorks = new List<ViewUndergraduateStudentsWork>();
@@ -78,37 +78,42 @@ namespace prjcg2lab.Controllers
             return View(viewUndergraduateStudentsWorks);
             
         }
+        public IActionResult UpdateUndergraduateStudentsWork() => View();              
         [HttpPost]
-        public IActionResult UpdateUndergraduateStudentsWork(string teammate, string topic,string youtubeURL,string googleDrive)
+        public IActionResult UpdateUndergraduateStudentsWork(ViewUndergraduateStudentsWork undergraduateStudentsWork)// string teammate, string topic,string youtubeURL,string googleDrive)
         {
-            string dealYoutubeId()
+            if (ModelState.IsValid)
             {
-                var toRemove = "https://www.youtube.com/watch?v=";
-                var Result = youtubeURL.Replace(toRemove, "");
-                if (Result.Contains("&"))
+                string dealYoutubeId()
                 {
-                   Result= Result.Remove(Result.IndexOf("&"));
-                    //Remove用法 ref:https://docs.microsoft.com/zh-tw/dotnet/api/system.string.remove?view=netcore-3.1
-                    //IndexOf用法 ref:http://a-jau.blogspot.com/2012/01/cstringindexoflastindexofsubstringsplit.html
+                    var toRemove = "https://www.youtube.com/watch?v=";
+                    var Result = undergraduateStudentsWork.youtubeURL.Replace(toRemove, "");
+                    if (Result.Contains("&"))
+                    {
+                        Result = Result.Remove(Result.IndexOf("&"));
+                        //Remove用法 ref:https://docs.microsoft.com/zh-tw/dotnet/api/system.string.remove?view=netcore-3.1
+                        //IndexOf用法 ref:http://a-jau.blogspot.com/2012/01/cstringindexoflastindexofsubstringsplit.html
+                    }
+                    return Result;
                 }
-                return Result;
-            }
-            using (var content = new ContextFactory().dbContext())
-            {
-                var undergraduateStudents = new UndergraduateStudentsWork
+                using (var content = new ContextFactory().dbContext())
                 {
-                   teammate=teammate,
-                   topic=topic,
-                   youtubeURL=youtubeURL,
-                   youtubeId= dealYoutubeId(),
-                   googleDriveURL =googleDrive,
-                    dateTime = DateTime.Now
-                };
-               
-                content.undergraduateStudentsWorks.Add(undergraduateStudents);
-                content.SaveChanges();
+                    var undergraduateStudents = new UndergraduateStudentsWork
+                    {
+                        teammate = undergraduateStudentsWork.teammate,
+                        topic = undergraduateStudentsWork.topic,
+                        youtubeURL = undergraduateStudentsWork.youtubeURL,
+                        youtubeId = dealYoutubeId(),
+                        googleDriveURL = undergraduateStudentsWork.googleDriveURL,
+                        dateTime = DateTime.Now
+                    };
+
+                    content.undergraduateStudentsWorks.Add(undergraduateStudents);
+                    content.SaveChanges();
+                    return RedirectToAction("ViewUndergraduateStudentsWork");
+                }
             }
-            return RedirectToAction("UpdateUndergraduateStudentsWork");
+            return View(undergraduateStudentsWork);
         }
         public IActionResult DeleteUndergraduateStudentsWork(int id)
         {
@@ -128,6 +133,8 @@ namespace prjcg2lab.Controllers
         }
         #endregion
         #region 碩士論文
+        public IActionResult MasterPaper() => View();
+        
         public IActionResult UpdateMasterPaper()
         {
             List<ViewMasterPaper> mpV = new List<ViewMasterPaper>();
@@ -167,7 +174,7 @@ namespace prjcg2lab.Controllers
             return View(mpV);
         }
         [HttpPost]
-        public IActionResult UpdateMasterPaper(string AuthorName,string topic,IFormFile MasterPdfFile)
+        public IActionResult MasterPaper(string AuthorName,string topic,IFormFile MasterPdfFile)
         {
             if (!Directory.Exists(_dir + "/wwwroot/Mt/pdf/MasterDegree/"+ AuthorName))
             {
@@ -190,7 +197,7 @@ namespace prjcg2lab.Controllers
                 content.MasterPapers.Add(mp);
                 content.SaveChanges();
             }
-            return RedirectToAction("UpdateMasterPaper");
+            return RedirectToAction("MasterPaper");
         }
         
         public IActionResult DeleteMasterPaper(string filePath,int id)
@@ -255,6 +262,335 @@ namespace prjcg2lab.Controllers
             return RedirectToAction("UpdatePaper");
         }
         #endregion
+        #region 期刊論文
+        public IActionResult ViewJournalPapersList()
+        {
 
+            var viewHankPageJournalPapers = new List<ViewHankPageJournalPaper>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageJournalPapers
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewHankPageJournalPaper
+                            {
+                                id = q.id,
+                                JournalPaper = q.JournalPaper
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageJournalPapers = query.ToList();
+                }
+
+            }
+            return View(viewHankPageJournalPapers);
+
+        }
+        public IActionResult JournalPapersList() => View();
+        [HttpPost]
+        public IActionResult JournalPapersList(ViewHankPageJournalPaper hankPageJournalPaper)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewHankPageJournalPaper hpj = hankPageJournalPaper;
+
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var HankPageJournalPaper = new HankPageJournalPaper()
+                    {
+                        JournalPaper = hpj.JournalPaper
+                    };
+                    content.HankPageJournalPapers.Add(HankPageJournalPaper);
+                    content.SaveChanges();
+                    return RedirectToAction("JournalPapersList");
+                }
+            }
+            return View(hankPageJournalPaper);
+        }
+        public IActionResult DeleteJournalPapers(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageJournalPapers
+                            where q.id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewJournalPapersList");
+        }
+        #endregion
+        #region 研討會論文       
+        public IActionResult ViewSeminarPapers()
+        {
+
+            var viewHankPageSeminarPapers = new List<ViewHankPageSeminarPaper>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageSeminarPapers
+                            orderby q.Id
+                            where q.Id != 0
+                            select new ViewHankPageSeminarPaper
+                            {
+                                Id = q.Id,
+                                SeminarPaper=q.SeminarPaper
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageSeminarPapers = query.ToList();
+                }
+
+            }
+            return View(viewHankPageSeminarPapers);
+
+        }
+        public IActionResult SeminarPapers() => View();
+       [HttpPost]
+        public IActionResult SeminarPapers(ViewHankPageSeminarPaper viewHankPageSeminarPaper)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var hankPageSeminarPaper = new HankPageSeminarPaper
+                    {
+                        SeminarPaper=viewHankPageSeminarPaper.SeminarPaper
+                    };
+
+                    content.HankPageSeminarPapers.Add(hankPageSeminarPaper);
+                    content.SaveChanges();
+                    return RedirectToAction("SeminarPapers");
+                }
+            }
+            return View(viewHankPageSeminarPaper);
+        }
+        public IActionResult DeleteSeminarPapers(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageSeminarPapers
+                            where q.Id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewSeminarPapers");
+        }
+        #endregion
+        #region 計畫
+        public IActionResult ViewHankProject()
+        {
+
+            var viewHankPageProjects = new List<ViewHankPageProject>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.hankPageProjects
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewHankPageProject
+                            {
+                                id = q.id,
+                                schoolYear = q.schoolYear,
+                                projectName=q.projectName,
+                                projectTopice=q.projectTopice
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageProjects = query.ToList();
+                }
+
+            }
+            return View(viewHankPageProjects);
+
+        }
+        public IActionResult UpdateProject() => View();
+        [HttpPost]
+        public IActionResult UpdateProject(ViewHankPageProject viewHankPageProject)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var hankPageProject = new HankPageProject
+                    {
+                        schoolYear = viewHankPageProject.schoolYear,
+                        projectName=viewHankPageProject.projectName,
+                        projectTopice=viewHankPageProject.projectTopice
+                    };
+
+                    content.hankPageProjects.Add(hankPageProject);
+                    content.SaveChanges();
+                    return RedirectToAction("UpdateProject");
+                }
+            }
+            return View(viewHankPageProject);
+        }
+        public IActionResult DeleteProject(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.HankPageSeminarPapers
+                            where q.Id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewHankProject");
+        }
+        #endregion
+        #region 產學研究
+        public IActionResult ViewIndustryResearch()
+        {
+
+            var viewIndustryResearches = new List<ViewIndustryResearch>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.industryResearches
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewIndustryResearch
+                            {
+                                id = q.id,
+                                schoolYear = q.schoolYear,
+                                projectName = q.projectName,
+                                projectTopice = q.projectTopice
+                            };
+
+                if (query.Any())
+                {
+                    viewIndustryResearches = query.ToList();
+                }
+
+            }
+            return View(viewIndustryResearches);
+
+        }
+        public IActionResult UpdateIndustryResearch() => View();
+        [HttpPost]
+        public IActionResult UpdateIndustryResearch(ViewIndustryResearch viewIndustryResearch)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var industryResearch = new IndustryResearch
+                    {
+                        schoolYear = viewIndustryResearch.schoolYear,
+                        projectName = viewIndustryResearch.projectName,
+                        projectTopice = viewIndustryResearch.projectTopice
+                    };
+
+                    content.industryResearches.Add(industryResearch);
+                    content.SaveChanges();
+                    return RedirectToAction("UpdateIndustryResearch");
+                }
+            }
+            return View(viewIndustryResearch);
+        }
+        public IActionResult DeleteIndustryResearch(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.industryResearches
+                            where q.id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewIndustryResearch");
+        }
+        #endregion
+        #region 榮譽榜
+        public IActionResult ViewHankPageHonor()
+        {
+
+            var viewHankPageHonors = new List<ViewHankPageHonor>();
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.hankPageHonors
+                            orderby q.id
+                            where q.id != 0
+                            select new ViewHankPageHonor
+                            {
+                                id = q.id,
+                                schoolYear = q.schoolYear,
+                                Name = q.Name,
+                                DoWhat = q.DoWhat,
+                                Award=q.Award
+                            };
+
+                if (query.Any())
+                {
+                    viewHankPageHonors = query.ToList();
+                }
+
+            }
+            return View(viewHankPageHonors);
+
+        }
+        public IActionResult UpdateHonors() => View();
+        [HttpPost]
+        public IActionResult UpdateHonors(ViewHankPageHonor viewHankPageHonor)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var content = new ContextFactory().dbContext())
+                {
+                    var hankPageHonor = new HankPageHonor
+                    {
+                        schoolYear = viewHankPageHonor.schoolYear,
+                        Name = viewHankPageHonor.Name,
+                        DoWhat = viewHankPageHonor.DoWhat,
+                        Award = viewHankPageHonor.Award
+                    };
+
+                    content.hankPageHonors.Add(hankPageHonor);
+                    content.SaveChanges();
+                    return RedirectToAction("UpdateHonors");
+                }
+            }
+            return View(viewHankPageHonor);
+        }
+        public IActionResult DeleteHonors(int id)
+        {
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = from q in content.hankPageHonors
+                            where q.id == id
+                            select q;
+                if (query.FirstOrDefault() != null)
+                {
+                    content.Remove(query.FirstOrDefault());
+                    content.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("ViewHankPageHonor");
+        }
+        #endregion
     }
 }

@@ -1,0 +1,57 @@
+﻿@model infra.ViewModels.ViewIndustryResearch
+@{
+    ViewData["Title"] = "UpdateIndustryResearch";
+    Layout = "~/Views/Shared/Dash_Layout.cshtml";
+}
+
+    <div class="content-wrapper" style="min-height: 431px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="col">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">更新產學研究清單</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    @using (Html.BeginForm("UpdateIndustryResearch", "Dashboard", FormMethod.Post))
+                    {
+
+                        <!--<form role="form" asp-controller="Dashboard" asp-action="UpdateUndergraduateStudentsWork"
+                    enctype="multipart/form-data" method="post">-->
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">學年度</label>
+                                @Html.EditorFor(model => model.schoolYear, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.schoolYear, "", new { @class = "text-danger" })
+                                <!--<input type="text" class="form-control" id="AuthorName" name="teammate" required>-->
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">項目</label>
+                                @Html.EditorFor(model => model.projectName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.projectName, "", new { @class = "text-danger" })
+                                <!--<input type="text" class="form-control" id="AuthorName" name="teammate" required>-->
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">研究項目</label>
+                                @Html.EditorFor(model => model.projectTopice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.projectTopice, "", new { @class = "text-danger" })
+                                <!--<input type="text" class="form-control" id="AuthorName" name="teammate" required>-->
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('確定要上傳嗎?')">
+                                上傳
+                            </button>
+                        </div>
+                        <!--</form>-->
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+

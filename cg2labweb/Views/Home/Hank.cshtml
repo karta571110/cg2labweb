@@ -1,4 +1,4 @@
-﻿@model IEnumerable<infra.Models.Research>
+﻿@model IEnumerable<infra.ViewModels.ViewHankPage>
 @{
     ViewBag.Title = "Hank";
     Layout = "~/Views/Shared/HomePage.cshtml";
@@ -23,7 +23,6 @@
         th {
             background-color: silver;
         }
-        
     </style>
 </head>
 
@@ -48,6 +47,13 @@
                     <ol>
                         <li> Hung-Kuang Chen, Chin-Shyrung Fahn, Jeffery, J. P. Tsai, and Ming-Bo Lin, “A novel cache-based approach to large polygonal mesh simplification,” Journal of Information Science and Engineering, Vol. 22, No. 4, Pages 843-861, July 2006, SCI</li>
                         <li>Hung-Kuang Chen, Chin-Shyurng Fahn, Jeffrey J. P. Tsai, Rong-Ming Chen, Ming-Bo Lin, “Generating high-quality discrete LOD meshes for 3D computer games in linear time,” Multimedia Systems, Volume 11, Issue 5, Jun 2006, Pages 480 – 494, DOI 10.1007/s00530-006-0017-1, <a href="http://dx.doi.org/10.1007/s00530-006-0017-1" class="btn-info">點此查看</a>, SCI</li>
+                        @foreach (var item in Model)
+                        {
+                            for (int i = 0; i < item.JournalPapers.Count; i++)
+                            {
+                                <li>@item.JournalPapers[i].JournalPaper</li>
+                            }
+                        }
                     </ol>
 
 
@@ -66,40 +72,79 @@
                         <li><p>Interaction, UAHCI 2007. Held as Part of HCI Int. 2007 Proc., 2007, p 818-827.(EI)</p></li>
                         <li><p>Hung-Kuang Chen, Chin-Shyurng Fahn, Jeffrey J.P. Tsai, Rong-Ming Chen, Ming-Bo Lin, “A Linear Time Algorithm for High Quality Mesh Simplification,” in Proc. of IEEE 6th International Symposium on Multimedia Software Engineering, Miami, USA, pp. 169-176, Dec 2004</p></li>
                         <li><p>K.C. Shih, R.M. Chen, R.M. Hu, F.M. Liu, H.K. Chen, Jeffrey J.P. Tsai, “Prediction of Gene Regulatory Networks using Differential Expression of cDNA Microarray Data,” in Proc. of IEEE 6th International Symposium on Multimedia Software Engineering, Miami, USA, pp. 378-385, Dec 2004</p></li>
+                        @foreach (var item in Model)
+                        {
+                            for (int i = 0; i < item.viewHankPageSeminarPapers.Count; i++)
+                            {
+                                <li><p>@item.viewHankPageSeminarPapers[i].SeminarPaper</p></li>
+                            }
+                        }
                     </ol>
                     <hr class="featurette-divider">
                     <h2>計畫與產學合作</h2>
 
-                    <h4><strong> 98學年度 計畫</strong></h4>
+                    <h4><strong> 計畫</strong></h4>
                     <div style="overflow-x:auto;">
                         <table>
                             <tr>
+                                <th>學年度 </th>
                                 <th>項目</th>
                                 <th>研究題目</th>
                             </tr>
                             <tr>
+                                <td>98 </td>
                                 <td>國科會計畫</td>
                                 <td>三維網格之漸進式數位浮水印認證之研究</td>
+
                             </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                for (int i = 0; i < item.viewHankPageProjects.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@item.viewHankPageProjects[i].schoolYear </td>
+                                        <td>@item.viewHankPageProjects[i].projectTopice</td>
+                                        <td>@item.viewHankPageProjects[i].projectName</td>
+                                    </tr>
+                                }
+                            }
+
                         </table>
                     </div>
-                    <h4><strong> 97學年度 產學研究</strong></h4>
+                    <h4><strong>產學研究</strong></h4>
                     <div style="overflow-x:auto;">
                         <table>
                             <tr>
+                                <th>學年度</th>
                                 <th>項目</th>
                                 <th>研究題目</th>
                             </tr>
                             <tr>
+                                <td>97學年度</td>
                                 <td>產學研究</td>
                                 <td>相片鉛筆速描效果自動轉換系統技術之開發與研究</td>
+
                             </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                for (int i = 0; i < item.ViewIndustryResearches.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@item.ViewIndustryResearches[i].schoolYear</td>
+                                        <td>@item.ViewIndustryResearches[i].projectTopice</td>
+                                        <td>@item.ViewIndustryResearches[i].projectName</td>
+                                    </tr>
+                                }
+                            }
+
                         </table>
                     </div>
                     <hr class="featurette-divider">
                     <h2>出版</h2>
                     <div>
-                        <img src="~/Mt/img/bookNovel/hankpublish.PNG" style="width:100%;height:100%;"/>
+                        <img src="~/Mt/img/bookNovel/hankpublish.PNG" style="width:100%;height:100%;" />
                     </div>
                     <hr class="featurette-divider">
                     <h2>榮譽榜</h2>
@@ -112,10 +157,21 @@
                                 <th>榮譽類別</th>
                             </tr>
                             <tr>
+
                                 <td>96</td>
                                 <td>陳文淵、陳宏光、曾振東、黃國興、賴雲龍</td>
                                 <td>國立勤益科技大學97年度「推動科技研究發展獎勵」得獎教師</td>
                                 <td>學術論文獎</td>
+                                @foreach (var item in Model)
+                                {
+                                    for (int i = 0; i < item.viewHankPageHonors.Count; i++)
+                                    {
+                                        <td>@item.viewHankPageHonors[i].schoolYear</td>
+                                        <td>@item.viewHankPageHonors[i].Name</td>
+                                        <td>@item.viewHankPageHonors[i].DoWhat</td>
+                                        <td>@item.viewHankPageHonors[i].Award</td>
+                                    }
+                                }
                             </tr>
                         </table>
                     </div>
@@ -152,25 +208,28 @@
                     <ol class="list-unstyled">
                         @foreach (var item in Model)
                         {
-                            <li><a href="~/Mt/pdf/hank's/@item.fileName" target="_blank">@item.justName</a></li>
+                            for (int i = 0; i < item.researches.Count; i++)
+                            {
+                                <li><a href="~/Mt/pdf/hank's/@item.researches[i].fileName" target="_blank">@item.researches[i].justName</a></li>
+                            }
                         }
 
                     </ol>
                 </div>
-                <div class="sidebar-module">
+                <!--<div class="sidebar-module">
                     <h4>Elsewhere</h4>
                     <ol class="list-unstyled">
                         <li><a href="#">GitHub</a></li>
                         <li><a href="#">Twitter</a></li>
                         <li><a href="#">Facebook</a></li>
                     </ol>
-                </div>
+                </div>-->
             </div><!-- /.blog-sidebar -->
 
         </div><!-- /.row -->
 
     </div><!-- /.container -->
-  
+
 </body>
 </html>
 
