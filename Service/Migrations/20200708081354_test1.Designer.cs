@@ -9,8 +9,8 @@ using Service;
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200706035132_try")]
-    partial class @try
+    [Migration("20200708081354_test1")]
+    partial class test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -162,7 +162,10 @@ namespace Service.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Passwora")
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
                         .HasColumnType("text");
 
                     b.Property<string>("Studentid")

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Service;
 
 namespace Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200708081305_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,26 +88,6 @@ namespace Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HankPageSeminarPapers");
-                });
-
-            modelBuilder.Entity("infra.Models.IndustryResearch", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("projectName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("projectTopice")
-                        .HasColumnType("text");
-
-                    b.Property<int>("schoolYear")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("industryResearches");
                 });
 
             modelBuilder.Entity("infra.Models.MasterPaper", b =>

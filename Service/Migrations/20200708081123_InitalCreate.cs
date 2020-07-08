@@ -4,10 +4,26 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Service.Migrations
 {
-    public partial class Test : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "hankPageHonors",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    schoolYear = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    DoWhat = table.Column<string>(nullable: true),
+                    Award = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_hankPageHonors", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "HankPageJournalPapers",
                 columns: table => new
@@ -22,6 +38,21 @@ namespace Service.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "hankPageProjects",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    schoolYear = table.Column<int>(nullable: false),
+                    projectName = table.Column<string>(nullable: true),
+                    projectTopice = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_hankPageProjects", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HankPageSeminarPapers",
                 columns: table => new
                 {
@@ -32,6 +63,21 @@ namespace Service.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HankPageSeminarPapers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "industryResearches",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    schoolYear = table.Column<int>(nullable: false),
+                    projectName = table.Column<string>(nullable: true),
+                    projectTopice = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_industryResearches", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,9 +118,10 @@ namespace Service.Migrations
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(nullable: true),
-                    Passwora = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Studentid = table.Column<string>(nullable: true)
+                    Studentid = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,10 +151,19 @@ namespace Service.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "hankPageHonors");
+
+            migrationBuilder.DropTable(
                 name: "HankPageJournalPapers");
 
             migrationBuilder.DropTable(
+                name: "hankPageProjects");
+
+            migrationBuilder.DropTable(
                 name: "HankPageSeminarPapers");
+
+            migrationBuilder.DropTable(
+                name: "industryResearches");
 
             migrationBuilder.DropTable(
                 name: "MasterPapers");
