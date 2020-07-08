@@ -16,6 +16,8 @@ namespace cg2labweb.Controllers
 {
     public class LoginController : Controller
     {
+
+
         public IActionResult Login()
         {
             return View();
@@ -24,7 +26,7 @@ namespace cg2labweb.Controllers
         [HttpPost]
         public IActionResult Login(ViewStudentData student)
         {
-            
+
             using (var content = new ContextFactory().dbContext())
             {
                 var query = content.StudentData
@@ -37,10 +39,12 @@ namespace cg2labweb.Controllers
                 }
                 CookieOptions cookieOptions = new CookieOptions();
                 cookieOptions.Expires = DateTime.Now.AddDays(7);
-                Response.Cookies.Append("studentid", student.Studentid, cookieOptions);                
+                Response.Cookies.Append("studentid", query.Studentid, cookieOptions);
+                Response.Cookies.Append("username", query.UserName, cookieOptions);
+                Response.Cookies.Append("status", query.Status, cookieOptions);
             }
 
-            return RedirectToAction("Index","home");
+            return RedirectToAction("Index", "home");
         }
 
         public IActionResult Registered()
@@ -60,7 +64,7 @@ namespace cg2labweb.Controllers
                                     Password = q.Password,
                                     Email = q.Email,
                                     Studentid = q.Studentid,
-                                    Status=q.Status
+                                    Status = q.Status
                                 };
                     if (query.Any())
                     {
@@ -70,7 +74,7 @@ namespace cg2labweb.Controllers
             }
             return View();
         }
-        
+
         [HttpPost]
         public IActionResult Registered(ViewStudentData student)
         {
@@ -84,7 +88,7 @@ namespace cg2labweb.Controllers
                         Password = student.Password,
                         Studentid = student.Studentid,
                         Email = student.Email,
-                        Status=student.Status
+                        Status = student.Status
                     };
 
                     content.StudentData.Add(studentData);
@@ -93,6 +97,17 @@ namespace cg2labweb.Controllers
                 }
             }
             return View(student);
+        }
+
+        public IActionResult Logout()
+        {
+            string value = "";
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Append("studentid", value, cookieOptions);
+            Response.Cookies.Append("username", value, cookieOptions);
+            Response.Cookies.Append("status", value, cookieOptions);
+            return RedirectToAction("Index", "home");
         }
 
     }

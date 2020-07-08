@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -45,6 +46,8 @@
             margin-left: 2.5%;
         }
     </style>
+
+
 </head>
 <body>
     <!-- NAVBAR
@@ -91,8 +94,51 @@
                                     <li><a href="#">Separated link</a></li>
                                     <li><a href="#">One more separated link</a></li>
                                 </ul>
+
                             </li>
-                            <li style="left:450px"><a href="@Url.Action("Login","Login")">登入</a></li>
+
+                            @if (Context.Request.Cookies.TryGetValue("Studentid", out string Studentid))
+                            {
+                                @Context.Request.Cookies.TryGetValue("username", out string username)
+                                @Context.Request.Cookies.TryGetValue("status", out string status)
+                                @if (status == "專題生")
+                                {
+                                    <li class="dropdown" style="left:300px">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@username <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="@Url.Action("Upload","Manager")">專題生</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li class="dropdown-header">Nav header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="dropdown" style="left:300px">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@username <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="@Url.Action("Upload","Manager")">研究生</a></li>
+                                            <li><a href="@Url.Action("Logout","Login")">登出</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li class="dropdown-header">Nav header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                        </ul>
+                                    </li>
+                                }
+
+
+                            }
+                            else
+                            {
+                                <li style="left:450px"><a href="@Url.Action("Login", "Login")">登入</a></li>
+                                <li style="left:300px"><a href="@Url.Action("Registered", "Login")">註冊</a></li>
+                            }
 
                         </ul>
                     </div>
