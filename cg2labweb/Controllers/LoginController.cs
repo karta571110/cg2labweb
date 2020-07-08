@@ -93,7 +93,7 @@ namespace cg2labweb.Controllers
 
                     content.StudentData.Add(studentData);
                     content.SaveChanges();
-                    return RedirectToAction("Registered");
+                    return RedirectToAction("Index","Home");
                 }
             }
             return View(student);

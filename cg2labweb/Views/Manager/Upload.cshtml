@@ -1,22 +1,37 @@
 ﻿
 @{
     ViewData["Title"] = "Upload";
-    Layout = "~/Views/Shared/Dash_Layout.cshtml";
+    Layout = "~/Views/Shared/HomePage.cshtml";
 }
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="main">
+        <h1>上傳檔案</h1>
+        <hr />
 
-<h1>上傳檔案</h1>
 
-<div>
-    <h4>單檔上傳</h4>
-    <form asp-controller="Manager" asp-action="Upload" enctype="multipart/form-data" method="post">
-        <input type="file" name="file" />
-        <button type="submit">確定上傳</button>
-    </form>
-</div>
-<div>
-    <h4>多檔上傳</h4>
-    <form asp-controller="Manager" asp-action="MulitipleFile" enctype="multipart/form-data" method="post">
-        <input type="file" multiple name="file" />
-        <button type="submit">確定上傳</button>
-    </form>
-</div>
+        <div class="row">
+            <div class="column">
+                <div class="content">
+                    <a href="@Url.Action("ModifyInfo","Manager")">編輯個人檔案</a>
+                </div>
+
+                <h4>單檔上傳</h4>
+                <form asp-controller="Manager" asp-action="Upload" enctype="multipart/form-data" method="post">
+                    <input type="file" name="file" />
+                    <button type="submit">確定上傳</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <h4>多檔上傳</h4>
+        <form asp-controller="Manager" asp-action="MulitipleFile" enctype="multipart/form-data" method="post">
+            <input type="file" multiple name="file" />
+            <button type="submit">確定上傳</button>
+        </form>
+    </div>
+</body>
+</html>

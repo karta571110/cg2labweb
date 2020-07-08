@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using infra.Models;
+using infra.ViewModels;
+using Service;
+
 
 namespace cg2labweb.Controllers
 {
@@ -44,6 +48,34 @@ namespace cg2labweb.Controllers
                 {
                     file.CopyTo(fileStream);
                 }
+            }
+            return RedirectToAction("Upload");
+        }
+
+        public IActionResult ModifyInfo()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ModifyInfo(ViewStudentData student)
+        {
+            HttpContext.Request.Cookies.TryGetValue("studentid", out string studentid);
+
+            using (var content = new ContextFactory().dbContext())
+            {
+                var query = content.StudentData
+                            .Where(m => m.Studentid == studentid)
+                            .FirstOrDefault();
+
+                query.UserName = student.UserName;
+                query.Password = student.Password;
+                query.Studentid = studentid;
+                query.Email = student.Email;
+                query.Status = student.Status;
+
+                content.StudentData.Update(query);
+                content.SaveChanges();
             }
             return RedirectToAction("Upload");
         }

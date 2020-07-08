@@ -97,7 +97,7 @@
 
                             </li>
 
-                            @if (Context.Request.Cookies.TryGetValue("Studentid", out string Studentid))
+                            @if (Context.Request.Cookies.TryGetValue("studentid", out string Studentid))
                             {
                                 @Context.Request.Cookies.TryGetValue("username", out string username)
                                 @Context.Request.Cookies.TryGetValue("status", out string status)
@@ -107,12 +107,7 @@
                                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@username <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="@Url.Action("Upload","Manager")">專題生</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li class="dropdown-header">Nav header</li>
-                                            <li><a href="#">Separated link</a></li>
-                                            <li><a href="#">One more separated link</a></li>
+                                            <li><a href="@Url.Action("Logout","Login")">登出</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -123,11 +118,6 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="@Url.Action("Upload","Manager")">研究生</a></li>
                                             <li><a href="@Url.Action("Logout","Login")">登出</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li class="dropdown-header">Nav header</li>
-                                            <li><a href="#">Separated link</a></li>
-                                            <li><a href="#">One more separated link</a></li>
                                         </ul>
                                     </li>
                                 }
